@@ -140,7 +140,7 @@ require_auth();
 
     </main>
 
-    <script src="https://unpkg.com/@AugFJTan/zxing-library@0.21.3/umd/index.min.js"></script>
+    <script src="https://unpkg.com/@zxing/library@0.18.6/umd/index.min.js"></script>
     <script src="assets/js/scanner.js"></script>
     <script src="assets/js/app.js"></script>
     <script>
