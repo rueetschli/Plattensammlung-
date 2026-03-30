@@ -1,0 +1,10 @@
+# Verzeichnisschutz für /data/
+<FilesMatch "collection\.json$">
+    Require all denied
+</FilesMatch>
+
+# PHP-Fehler unterdrücken
+php_flag display_errors off
+
+# UTF-8
+AddDefaultCharset UTF-8
