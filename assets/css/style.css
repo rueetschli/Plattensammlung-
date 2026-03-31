@@ -14,9 +14,11 @@
     --neon-cyan: #00f5ff;
     --neon-green: #39ff14;
     --neon-yellow: #ffe600;
+    --neon-gold: #ffaa00;
     --neon-pink-glow: 0 0 10px #ff2d95, 0 0 30px #ff2d9555;
     --neon-cyan-glow: 0 0 10px #00f5ff, 0 0 30px #00f5ff55;
     --neon-green-glow: 0 0 10px #39ff14, 0 0 30px #39ff1455;
+    --neon-gold-glow: 0 0 10px #ffaa00, 0 0 30px #ffaa0055;
     --radius: 12px;
     --font-main: 'Montserrat', sans-serif;
     --font-retro: 'Press Start 2P', cursive;
@@ -104,6 +106,63 @@ img { max-width: 100%; height: auto; display: block; }
     box-shadow: var(--neon-cyan-glow);
 }
 
+/* ===== Tab-Navigation (Arcade-Buttons) ===== */
+.tab-nav {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px 16px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.tab-btn {
+    font-family: var(--font-retro);
+    font-size: 0.6rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    border: 2px solid #333;
+    border-radius: 10px;
+    background: var(--bg-card);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    flex: 1;
+    max-width: 280px;
+    position: relative;
+    overflow: hidden;
+}
+
+.tab-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.tab-btn:hover {
+    border-color: #555;
+    color: var(--text-main);
+}
+
+.tab-btn.active[data-tab="owned"] {
+    background: linear-gradient(135deg, #1a1a2e, #0d2040);
+    border-color: var(--neon-cyan);
+    color: var(--neon-cyan);
+    box-shadow: var(--neon-cyan-glow), inset 0 0 20px rgba(0, 245, 255, 0.08);
+    text-shadow: var(--neon-cyan-glow);
+}
+
+.tab-btn.active[data-tab="wishlist"] {
+    background: linear-gradient(135deg, #2e1a1a, #402000);
+    border-color: var(--neon-gold);
+    color: var(--neon-gold);
+    box-shadow: var(--neon-gold-glow), inset 0 0 20px rgba(255, 170, 0, 0.08);
+    text-shadow: var(--neon-gold-glow);
+}
+
 /* ===== Buttons ===== */
 .btn {
     display: inline-flex;
@@ -153,6 +212,31 @@ img { max-width: 100%; height: auto; display: block; }
 }
 .btn-danger:hover { background: #a93226; }
 
+/* ===== "In Sammlung verschieben"-Button ===== */
+.btn-move-to-collection {
+    display: block;
+    width: 100%;
+    margin-top: 8px;
+    padding: 8px 10px;
+    border: 2px solid var(--neon-green);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--neon-green);
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: 0.72rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-shadow: var(--neon-green-glow);
+}
+
+.btn-move-to-collection:hover {
+    background: var(--neon-green);
+    color: var(--bg-dark);
+    box-shadow: var(--neon-green-glow);
+    text-shadow: none;
+}
+
 /* ===== FAB ===== */
 .fab {
     position: fixed;
@@ -195,11 +279,21 @@ img { max-width: 100%; height: auto; display: block; }
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
     border: 1px solid #222;
+    position: relative;
 }
 .record-card:hover {
     transform: translateY(-4px);
     box-shadow: var(--neon-cyan-glow);
     border-color: var(--neon-cyan);
+}
+
+/* Wunschliste-Karten: gold-Akzent */
+.record-card.wishlist-card {
+    border-color: rgba(255, 170, 0, 0.3);
+}
+.record-card.wishlist-card:hover {
+    box-shadow: var(--neon-gold-glow);
+    border-color: var(--neon-gold);
 }
 
 .record-card .card-cover {
@@ -248,6 +342,32 @@ img { max-width: 100%; height: auto; display: block; }
     font-size: 0.7rem;
     color: var(--text-muted);
     margin-top: 4px;
+}
+
+/* ===== Priorität-Sterne (Neon-Glow) ===== */
+.card-priority {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 10;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-shadow: var(--neon-gold-glow);
+    filter: drop-shadow(0 0 6px rgba(255, 170, 0, 0.6));
+    background: rgba(0, 0, 0, 0.65);
+    padding: 3px 8px;
+    border-radius: 20px;
+    line-height: 1;
+}
+
+.card-priority[data-priority="3"] {
+    text-shadow: 0 0 12px #ffaa00, 0 0 30px #ffaa00, 0 0 50px #ffaa00aa;
+    animation: starPulse 2s ease-in-out infinite;
+}
+
+@keyframes starPulse {
+    0%, 100% { filter: drop-shadow(0 0 6px rgba(255, 170, 0, 0.6)); }
+    50% { filter: drop-shadow(0 0 14px rgba(255, 170, 0, 1)); }
 }
 
 /* ===== Record Count ===== */
@@ -329,6 +449,12 @@ img { max-width: 100%; height: auto; display: block; }
 .badge-cyan { background: var(--neon-cyan); color: #000; }
 .badge-green { background: var(--neon-green); color: #000; }
 .badge-dark { background: #333; color: var(--text-main); }
+.badge-wishlist {
+    background: linear-gradient(135deg, #402800, #553300);
+    color: var(--neon-gold);
+    border: 1px solid var(--neon-gold);
+    text-shadow: var(--neon-gold-glow);
+}
 
 .detail-info-grid {
     display: grid;
@@ -416,6 +542,7 @@ img { max-width: 100%; height: auto; display: block; }
     gap: 12px;
     margin-top: 24px;
     padding: 0 16px;
+    flex-wrap: wrap;
 }
 
 /* ===== Add Page ===== */
@@ -612,6 +739,143 @@ textarea.input-full { resize: vertical; }
     margin-top: 20px;
 }
 
+/* ===== Ziel-Auswahl (Sammlung / Wunschliste) ===== */
+.destination-group {
+    margin-bottom: 18px !important;
+}
+
+.destination-toggle {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.radio-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 14px 10px;
+    border: 2px solid #333;
+    border-radius: 10px;
+    background: var(--bg-card);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-align: center;
+}
+
+.radio-card input[type="radio"] {
+    display: none;
+}
+
+.radio-card-icon {
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.radio-card-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+}
+
+.radio-card:hover {
+    border-color: #555;
+}
+
+.radio-card.active {
+    border-color: var(--neon-cyan);
+    background: linear-gradient(135deg, #1a1a2e, #0d2040);
+    box-shadow: var(--neon-cyan-glow);
+}
+
+.radio-card.active .radio-card-label {
+    color: var(--neon-cyan);
+    text-shadow: var(--neon-cyan-glow);
+}
+
+/* Wunschliste-Radio: gold statt cyan */
+#radioWishlist.active {
+    border-color: var(--neon-gold);
+    background: linear-gradient(135deg, #2e1a1a, #402000);
+    box-shadow: var(--neon-gold-glow);
+}
+
+#radioWishlist.active .radio-card-label {
+    color: var(--neon-gold);
+    text-shadow: var(--neon-gold-glow);
+}
+
+/* ===== Priorität-Auswahl ===== */
+.priority-group {
+    margin-bottom: 18px !important;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.priority-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.priority-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border: 2px solid #333;
+    border-radius: 10px;
+    background: var(--bg-card);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.priority-option input[type="radio"] {
+    display: none;
+}
+
+.priority-stars {
+    font-size: 1rem;
+    letter-spacing: 2px;
+    line-height: 1;
+    filter: grayscale(0.5) brightness(0.7);
+    transition: all 0.2s;
+}
+
+.priority-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    transition: color 0.2s;
+}
+
+.priority-option:hover {
+    border-color: #555;
+}
+
+.priority-option.active {
+    border-color: var(--neon-gold);
+    background: linear-gradient(135deg, #2e1a1a, #402000);
+    box-shadow: var(--neon-gold-glow);
+}
+
+.priority-option.active .priority-stars {
+    filter: none;
+    text-shadow: var(--neon-gold-glow);
+}
+
+.priority-option.active .priority-label {
+    color: var(--neon-gold);
+    text-shadow: var(--neon-gold-glow);
+}
+
 /* ===== Tracklist-Edit ===== */
 .tracklist-edit {
     display: flex;
@@ -773,6 +1037,7 @@ textarea.input-full { resize: vertical; }
     }
     .logo-text { font-size: 1rem; }
     .filter-input { width: 200px; }
+    .tab-btn { font-size: 0.7rem; padding: 16px 36px; }
 }
 
 @media (max-width: 400px) {
@@ -780,4 +1045,6 @@ textarea.input-full { resize: vertical; }
     .filter-input { flex: 1; }
     .form-row { grid-template-columns: 1fr; }
     .detail-info-grid { grid-template-columns: 1fr; }
+    .tab-btn { font-size: 0.5rem; padding: 10px 12px; }
+    .destination-toggle { grid-template-columns: 1fr; }
 }

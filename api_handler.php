@@ -3,13 +3,14 @@
  * api_handler.php – Discogs API, Bild-Download, JSON-Speicherung
  *
  * Aktionen (GET/POST ?action=...):
- *   search        – Barcode- oder Textsuche auf Discogs
- *   fetch_release – Komplette Release-Daten holen
- *   save          – Platte in collection.json speichern
- *   delete        – Platte aus collection.json löschen
- *   get           – Einzelne Platte laden
- *   list          – Alle Platten laden
- *   upload_cover  – Manuelles Cover-Upload
+ *   search             – Barcode- oder Textsuche auf Discogs
+ *   fetch_release      – Komplette Release-Daten holen
+ *   save               – Platte in collection.json speichern
+ *   delete             – Platte aus collection.json löschen
+ *   get                – Einzelne Platte laden
+ *   list               – Alle Platten laden
+ *   upload_cover       – Manuelles Cover-Upload
+ *   move_to_collection – Platte von Wunschliste in Sammlung verschieben
  */
 require_once __DIR__ . '/config/config.php';
 require_auth();
@@ -246,6 +247,13 @@ switch ($action) {
             $localCover = $input['local_cover_path'];
         }
 
+        // Status und Priorität aus dem Frontend
+        $status   = ($input['status'] ?? 'owned') === 'wishlist' ? 'wishlist' : 'owned';
+        $priority = null;
+        if ($status === 'wishlist') {
+            $priority = max(1, min(3, (int)($input['priority'] ?? 1)));
+        }
+
         $record = [
             'id'               => generate_id(),
             'discogs_id'       => (int)($input['discogs_id'] ?? 0),
@@ -262,7 +270,12 @@ switch ($action) {
             'local_cover_path' => $localCover,
             'tracklist'        => $input['tracklist'] ?? [],
             'added_date'       => date('Y-m-d H:i:s'),
+            'status'           => $status,
         ];
+
+        if ($status === 'wishlist') {
+            $record['priority'] = $priority;
+        }
 
         if ($record['artist'] === '' || $record['title'] === '') {
             json_error('Artist und Titel sind Pflichtfelder.');
@@ -315,6 +328,10 @@ switch ($action) {
         $collection = load_collection();
         foreach ($collection as $rec) {
             if (($rec['id'] ?? '') === $id) {
+                // Abwärtskompatibilität: fehlender Status = "owned"
+                if (!isset($rec['status'])) {
+                    $rec['status'] = 'owned';
+                }
                 json_response(['record' => $rec]);
             }
         }
@@ -323,7 +340,15 @@ switch ($action) {
 
     // ======== 6. Alle Platten laden ========
     case 'list':
-        json_response(['records' => load_collection()]);
+        $collection = load_collection();
+        // Abwärtskompatibilität: fehlender Status = "owned"
+        foreach ($collection as &$rec) {
+            if (!isset($rec['status'])) {
+                $rec['status'] = 'owned';
+            }
+        }
+        unset($rec);
+        json_response(['records' => $collection]);
         break;
 
     // ======== 7. Cover manuell hochladen ========
@@ -357,6 +382,35 @@ switch ($action) {
         }
 
         json_response(['local_cover_path' => 'assets/covers/' . $name]);
+        break;
+
+    // ======== 8. Platte von Wunschliste in Sammlung verschieben ========
+    case 'move_to_collection':
+        $input = json_decode(file_get_contents('php://input'), true);
+        $id    = trim($input['id'] ?? $_GET['id'] ?? '');
+        if ($id === '') {
+            json_error('Keine ID angegeben.');
+        }
+
+        $collection = load_collection();
+        $found      = false;
+
+        foreach ($collection as &$rec) {
+            if (($rec['id'] ?? '') === $id) {
+                $rec['status'] = 'owned';
+                unset($rec['priority']);
+                $found = true;
+                break;
+            }
+        }
+        unset($rec);
+
+        if (!$found) {
+            json_error('Platte nicht gefunden.', 404);
+        }
+
+        save_collection($collection);
+        json_response(['success' => true]);
         break;
 
     default:
