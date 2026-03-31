@@ -1,0 +1,25 @@
+# VinylKids Collector – Konfiguration & Laufzeit
+config/config.php
+
+# Sammlungsdaten (nicht die .htaccess und .gitkeep)
+data/collection.json
+
+# Heruntergeladene Cover-Bilder (nicht den .gitkeep)
+assets/covers/*
+!assets/covers/.gitkeep
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Temporäre Dateien
+*.tmp
+*.bak
+*.log
