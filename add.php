@@ -92,12 +92,12 @@ require_auth();
                             <span class="priority-stars">&#11088;</span>
                             <span class="priority-label">Wäre cool</span>
                         </label>
-                        <label class="priority-option">
+                        <label class="priority-option active">
                             <input type="radio" name="priority" value="2" checked>
                             <span class="priority-stars">&#11088;&#11088;</span>
                             <span class="priority-label">Sehr gerne</span>
                         </label>
-                        <label class="priority-option active">
+                        <label class="priority-option">
                             <input type="radio" name="priority" value="3">
                             <span class="priority-stars">&#11088;&#11088;&#11088;</span>
                             <span class="priority-label">Unbedingt!</span>
