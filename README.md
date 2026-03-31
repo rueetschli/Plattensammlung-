@@ -23,7 +23,8 @@ Eine mobile Web-App zum Verwalten deiner Schallplattensammlung – mit Barcode-S
 
 | Sammlung | Wunschliste | Hinzufuegen |
 |----------|-------------|------------|
-| Kachel-Grid mit Cover, Artist, Titel | Neon-Sterne zeigen Prioritaet, "Habe ich bekommen!"-Button | Barcode-Scan, Textsuche, Ziel-Auswahl |
+| <img width="200" alt="image" src="https://github.com/user-attachments/assets/0b262c74-558d-449e-ab44-f01db70210c4" /> |  <img width="200" alt="image" src="https://github.com/user-attachments/assets/df25f391-9763-4029-a1a3-9aec05d0d7c8" /> |  <img width="200" alt="image" src="https://github.com/user-attachments/assets/5ea7434d-08ae-4e14-9ce8-f1504ad42697" /> |
+ 
 
 ## Voraussetzungen
 
