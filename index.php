@@ -1,6 +1,6 @@
 <?php
 /**
- * index.php – Hauptansicht: Sammlung als Kachel-Grid
+ * index.php – Hauptansicht: Sammlung & Wunschliste als Kachel-Grid
  */
 require_once __DIR__ . '/config/config.php';
 require_auth();
@@ -37,13 +37,19 @@ require_auth();
         </div>
     </header>
 
+    <!-- Tab-Navigation: Sammlung / Wunschliste -->
+    <nav class="tab-nav" id="tabNav">
+        <button class="tab-btn active" data-tab="owned">&#127925; Meine Sammlung</button>
+        <button class="tab-btn" data-tab="wishlist">&#11088; Wunschliste</button>
+    </nav>
+
     <main class="collection-grid" id="collectionGrid">
         <!-- Kacheln werden via JS geladen -->
     </main>
 
     <div class="empty-state" id="emptyState" style="display:none;">
         <span class="empty-icon">&#127925;</span>
-        <p>Noch keine Platten in deiner Sammlung.<br>Scanne deine erste Platte!</p>
+        <p id="emptyText">Noch keine Platten in deiner Sammlung.<br>Scanne deine erste Platte!</p>
     </div>
 
     <div class="record-count" id="recordCount"></div>
