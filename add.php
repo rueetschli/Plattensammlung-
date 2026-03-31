@@ -66,6 +66,45 @@ require_auth();
 
                 <div class="form-cover-preview" id="coverPreview"></div>
 
+                <!-- Ziel: Sammlung oder Wunschliste -->
+                <div class="form-group destination-group">
+                    <label>Wo soll die Platte hin?</label>
+                    <div class="destination-toggle">
+                        <label class="radio-card active" id="radioOwned">
+                            <input type="radio" name="status" value="owned" checked>
+                            <span class="radio-card-icon">&#127925;</span>
+                            <span class="radio-card-label">In meine Sammlung</span>
+                        </label>
+                        <label class="radio-card" id="radioWishlist">
+                            <input type="radio" name="status" value="wishlist">
+                            <span class="radio-card-icon">&#11088;</span>
+                            <span class="radio-card-label">Auf die Wunschliste</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Priorität (nur bei Wunschliste sichtbar) -->
+                <div class="form-group priority-group" id="priorityGroup" style="display:none;">
+                    <label>Wie sehr wünschst du dir diese Platte?</label>
+                    <div class="priority-selector">
+                        <label class="priority-option">
+                            <input type="radio" name="priority" value="1">
+                            <span class="priority-stars">&#11088;</span>
+                            <span class="priority-label">Wäre cool</span>
+                        </label>
+                        <label class="priority-option">
+                            <input type="radio" name="priority" value="2" checked>
+                            <span class="priority-stars">&#11088;&#11088;</span>
+                            <span class="priority-label">Sehr gerne</span>
+                        </label>
+                        <label class="priority-option active">
+                            <input type="radio" name="priority" value="3">
+                            <span class="priority-stars">&#11088;&#11088;&#11088;</span>
+                            <span class="priority-label">Unbedingt!</span>
+                        </label>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label>Artist *</label>
                     <input type="text" id="fArtist" name="artist" required class="input-full">
