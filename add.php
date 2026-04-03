@@ -31,12 +31,16 @@ require_auth();
             <div class="video-wrapper" id="videoWrapper">
                 <video id="scannerVideo" playsinline autoplay muted></video>
                 <div class="scan-overlay">
-                    <div class="scan-line"></div>
+                    <!-- Visuelle Scan-Box: entspricht dem Canvas-Crop-Bereich (60% × 25%) -->
+                    <div class="scan-box">
+                        <div class="scan-line"></div>
+                    </div>
                 </div>
             </div>
             <div class="scanner-controls">
                 <button class="btn btn-neon" id="btnStartScan">&#128247; Kamera starten</button>
                 <button class="btn btn-outline" id="btnStopScan" style="display:none;">Kamera stoppen</button>
+                <button class="btn btn-outline" id="btnTorch" style="display:none;">&#9889; Licht an</button>
             </div>
             <p class="scan-status" id="scanStatus"></p>
         </section>

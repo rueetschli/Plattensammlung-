@@ -592,16 +592,51 @@ img { max-width: 100%; height: auto; display: block; }
 .scan-overlay {
     position: absolute;
     inset: 0;
-    border: 2px solid var(--neon-green);
-    border-radius: var(--radius);
     pointer-events: none;
+}
+
+/* Scan-Box: 60% Breite × 25% Höhe, zentriert – entspricht dem Canvas-Crop */
+.scan-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    height: 25%;
+    border: 2px solid var(--neon-green);
+    border-radius: 6px;
+    box-shadow: var(--neon-green-glow), inset 0 0 20px rgba(57,255,20,0.05);
+    overflow: hidden;
+}
+
+/* Eck-Markierungen für bessere Sichtbarkeit */
+.scan-box::before,
+.scan-box::after {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-color: var(--neon-green);
+    border-style: solid;
+}
+.scan-box::before {
+    top: -2px;
+    left: -2px;
+    border-width: 3px 0 0 3px;
+    border-radius: 4px 0 0 0;
+}
+.scan-box::after {
+    bottom: -2px;
+    right: -2px;
+    border-width: 0 3px 3px 0;
+    border-radius: 0 0 4px 0;
 }
 
 .scan-line {
     position: absolute;
     top: 50%;
-    left: 5%;
-    right: 5%;
+    left: 4%;
+    right: 4%;
     height: 2px;
     background: var(--neon-green);
     box-shadow: var(--neon-green-glow);
